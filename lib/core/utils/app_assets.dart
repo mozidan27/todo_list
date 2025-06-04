@@ -1,7 +1,7 @@
 // ignore_for_file: prefer_single_quotes
 class Assets {
   Assets._();
-
+  
   /// Assets for imagesBackArrow
   /// assets/images/backArrow.svg
   static const String imagesBackArrow = "assets/images/backArrow.svg";
@@ -11,21 +11,19 @@ class Assets {
   static const String imagesCircleImage = "assets/images/circleImage.svg";
 
   /// Assets for imagesHomeScreenImage
-  /// assets/images/homeScreenImage.svg
-  static const String imagesHomeScreenImage =
-      "assets/images/homeScreenImage.svg";
+  /// assets/images/homeScreenImage.png
+  static const String imagesHomeScreenImage = "assets/images/homeScreenImage.png";
 
-  /// Assets for imagesLoginImage
-  /// assets/images/loginImage.svg
-  static const String imagesLoginImage = "assets/images/loginImage.svg";
+  /// Assets for imagesLoginImagePNG
+  /// assets/images/loginImagePNG.png
+  static const String imagesLoginImagePNG = "assets/images/loginImagePNG.png";
 
-  /// Assets for imagesOnboardingImage
-  /// assets/images/onboardingImage.svg
-  static const String imagesOnboardingImage =
-      "assets/images/onboardingImage.svg";
+  /// Assets for imagesOnboardingimagePNG
+  /// assets/images/onboardingimagePNG.png
+  static const String imagesOnboardingimagePNG = "assets/images/onboardingimagePNG.png";
 
-  /// Assets for imagesTaskScreenImage
-  /// assets/images/taskScreenImage.svg
-  static const String imagesTaskScreenImage =
-      "assets/images/taskScreenImage.svg";
+  /// Assets for imagesTaskScreenImagePNG
+  /// assets/images/taskScreenImagePNG.png
+  static const String imagesTaskScreenImagePNG = "assets/images/taskScreenImagePNG.png";
 }
+
