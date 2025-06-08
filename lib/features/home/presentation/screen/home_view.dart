@@ -120,7 +120,7 @@ class HomeView extends StatelessWidget {
                                       ),
                                       checkColor: AppColors.mintGreen,
                                       activeColor: AppColors.mintGreen,
-                                      value: true,
+                                      value: false,
                                       onChanged: (value) {},
                                     ),
                                     Text('first task'),
