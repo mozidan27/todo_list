@@ -1,16 +1,17 @@
-# todo_list
+# TODo App
 
-A new Flutter project.
+This project is to implement authentication using Firebase and local storage.
 
-## Getting Started
+## 🖌️ : Getting Started
 
-This project is a starting point for a Flutter application.
+###### ⭐: Onboarding View
+![Simulator Screenshot - iPhone 16 Pro Max - 2025-06-04 at 20 00 06](https://github.com/user-attachments/assets/34e02950-cf80-47a9-8844-a7a46640b329)
 
-A few resources to get you started if this is your first Flutter project:
+###### ⭐: Login View
+![Simulator Screenshot - iPhone 16 Pro Max - 2025-06-04 at 20 01 05](https://github.com/user-attachments/assets/28d6f187-cc13-4dab-8988-69ea5dc057e7)
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+###### ⭐: Signup View
+![Simulator Screenshot - iPhone 16 Pro Max - 2025-06-04 at 20 01 09](https://github.com/user-attachments/assets/e4c71791-c28e-46aa-bcca-cfda581ab4ec)
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+###### ⭐: Forgot Password View
+
