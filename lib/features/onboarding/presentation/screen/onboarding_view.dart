@@ -17,7 +17,10 @@ class OnBoardingView extends StatelessWidget {
         children: [
           SvgPicture.asset(Assets.imagesCircleImage),
           verticalSpace(80),
-          Center(child: Image.asset(Assets.imagesOnboardingimagePNG)),
+          Center(
+            child: SvgPicture.asset(Assets.imagesOnboardingAmico, height: 300),
+          ),
+          // Center(child: Image.asset(Assets.imagesOnboardingimagePNG)),
           verticalSpace(43),
 
           Center(

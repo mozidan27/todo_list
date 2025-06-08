@@ -36,7 +36,7 @@ class CustomSignInFormField extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   GestureDetector(
-                    onTap: () {},
+                    onTap: () => customnavigate(context, '/forgot'),
                     child: Text(
                       "ForgotPassword?",
                       style: CustomTextStyle.poppins13W500Black.copyWith(
@@ -51,7 +51,10 @@ class CustomSignInFormField extends StatelessWidget {
 
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 85.0),
-              child: MyCustomButtom(text: "Sign In", onTap: () {}),
+              child: MyCustomButtom(
+                text: "Sign In",
+                onTap: () => customnavigate(context, '/home'),
+              ),
             ),
             verticalSpace(33),
             LogInOrSignUpText(

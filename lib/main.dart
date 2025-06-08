@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:todo_list/core/app_router.dart';
 import 'package:todo_list/core/utils/app_colors.dart';
-import 'package:todo_list/features/onboarding/presentation/screen/onboarding_view.dart';
+import 'package:todo_list/features/home/presentation/screen/home_view.dart';
 
 void main() {
-  runApp(const ToDo());
+  runApp(const TODo());
 }
 
-class ToDo extends StatelessWidget {
-  const ToDo({super.key});
+class TODo extends StatelessWidget {
+  const TODo({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(scaffoldBackgroundColor: AppColors.backGround),
-      home: OnBoardingView(),
+      home: HomeView(),
       debugShowCheckedModeBanner: false,
       routes: buildAppRoutes(),
     );

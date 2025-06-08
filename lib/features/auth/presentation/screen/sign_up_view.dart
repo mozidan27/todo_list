@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:todo_list/core/helper/spacing.dart';
 import 'package:todo_list/core/utils/app_assets.dart';
 import 'package:todo_list/core/utils/app_colors.dart';
 import 'package:todo_list/core/utils/custom_text_style.dart';
+import 'package:todo_list/features/auth/presentation/widgets/circle_image_with_back_arrow.dart';
 import 'package:todo_list/features/auth/presentation/widgets/custom_sign_up_form_field.dart';
 
 class SignUpView extends StatelessWidget {
@@ -16,8 +17,8 @@ class SignUpView extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SvgPicture.asset(Assets.imagesCircleImage),
-            verticalSpace(49),
+            CircleImageWithBackArrow(),
+            verticalSpace(20),
 
             Center(
               child: Text(
@@ -36,7 +37,7 @@ class SignUpView extends StatelessWidget {
                 textAlign: TextAlign.center,
               ),
             ),
-            verticalSpace(56),
+            Center(child: SvgPicture.asset(Assets.imagesSignup, height: 300)),
             CustomSignUpFormField(),
           ],
         ),

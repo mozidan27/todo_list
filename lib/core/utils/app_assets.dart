@@ -2,6 +2,10 @@
 class Assets {
   Assets._();
   
+  /// Assets for imagesAvatar
+  /// assets/images/avatar.png
+  static const String imagesAvatar = "assets/images/avatar.png";
+
   /// Assets for imagesBackArrow
   /// assets/images/backArrow.svg
   static const String imagesBackArrow = "assets/images/backArrow.svg";
@@ -10,20 +14,28 @@ class Assets {
   /// assets/images/circleImage.svg
   static const String imagesCircleImage = "assets/images/circleImage.svg";
 
-  /// Assets for imagesHomeScreenImage
-  /// assets/images/homeScreenImage.png
-  static const String imagesHomeScreenImage = "assets/images/homeScreenImage.png";
+  /// Assets for imagesOnboardingAmico
+  /// assets/images/Onboarding-amico.svg
+  static const String imagesOnboardingAmico = "assets/images/Onboarding-amico.svg";
 
-  /// Assets for imagesLoginImagePNG
-  /// assets/images/loginImagePNG.png
-  static const String imagesLoginImagePNG = "assets/images/loginImagePNG.png";
+  /// Assets for imagesRectangle
+  /// assets/images/Rectangle.svg
+  static const String imagesRectangle = "assets/images/Rectangle.svg";
 
-  /// Assets for imagesOnboardingimagePNG
-  /// assets/images/onboardingimagePNG.png
-  static const String imagesOnboardingimagePNG = "assets/images/onboardingimagePNG.png";
+  /// Assets for imagesSigninsvgimage
+  /// assets/images/signinsvgimage.svg
+  static const String imagesSigninsvgimage = "assets/images/signinsvgimage.svg";
 
-  /// Assets for imagesTaskScreenImagePNG
-  /// assets/images/taskScreenImagePNG.png
-  static const String imagesTaskScreenImagePNG = "assets/images/taskScreenImagePNG.png";
+  /// Assets for imagesSignup
+  /// assets/images/signup.svg
+  static const String imagesSignup = "assets/images/signup.svg";
+
+  /// Assets for imagesTaskBro
+  /// assets/images/Task-bro.svg
+  static const String imagesTaskBro = "assets/images/Task-bro.svg";
+
+  /// Assets for imagesTodolist
+  /// assets/images/todolist.svg
+  static const String imagesTodolist = "assets/images/todolist.svg";
 }
 

@@ -3,6 +3,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:todo_list/core/helper/spacing.dart';
 import 'package:todo_list/core/utils/app_assets.dart';
 import 'package:todo_list/core/utils/custom_text_style.dart';
+import 'package:todo_list/features/auth/presentation/widgets/circle_image_with_back_arrow.dart';
 import 'package:todo_list/features/auth/presentation/widgets/custom_sign_in_form_field.dart';
 
 class SignInView extends StatelessWidget {
@@ -15,7 +16,7 @@ class SignInView extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SvgPicture.asset(Assets.imagesCircleImage),
+            CircleImageWithBackArrow(),
             verticalSpace(50),
             Center(
               child: Text(
@@ -24,7 +25,9 @@ class SignInView extends StatelessWidget {
                 textAlign: TextAlign.center,
               ),
             ),
-            Center(child: Image.asset(Assets.imagesLoginImagePNG)),
+            Center(
+              child: SvgPicture.asset(Assets.imagesSigninsvgimage, height: 300),
+            ),
             CustomSignInFormField(),
           ],
         ),
