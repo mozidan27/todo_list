@@ -62,6 +62,7 @@ class CustomSignInFormField extends StatelessWidget {
               text2: " Sign Up",
               onTap: () => customReplacementNavigate(context, '/signup'),
             ),
+            verticalSpace(15),
           ],
         ),
       ),

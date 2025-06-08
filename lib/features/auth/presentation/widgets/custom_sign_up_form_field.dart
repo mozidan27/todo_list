@@ -51,6 +51,7 @@ class CustomSignUpFormField extends StatelessWidget {
               text2: " Sign in",
               onTap: () => customReplacementNavigate(context, '/login'),
             ),
+            verticalSpace(15),
           ],
         ),
       ),
