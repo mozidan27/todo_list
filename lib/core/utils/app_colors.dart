@@ -7,5 +7,6 @@ abstract class AppColors {
   static Color lighGrey = Color(0xff4e4e4e);
   static Color darkGrey = Color(0xff424242);
   static Color white = Color(0xffFFFFFF);
-  static Color red = Color.fromARGB(255, 241, 0, 0);
+  static Color red = Color(0xffED1010);
+  static Color green = Color(0xff0C9409);
 }
