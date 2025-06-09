@@ -16,7 +16,11 @@ Map<String, WidgetBuilder> buildAppRoutes() {
         (context) =>
             BlocProvider(create: (context) => AuthCubit(), child: SignUpView()),
     '/onboarding': (context) => OnBoardingView(),
-    '/forgot': (context) => ForgotPasswordView(),
+    '/forgot':
+        (context) => BlocProvider(
+          create: (context) => AuthCubit(),
+          child: ForgotPasswordView(),
+        ),
     '/home': (context) => HomeView(),
   };
 }

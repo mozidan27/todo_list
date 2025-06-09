@@ -1,5 +1,7 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:todo_list/core/funcations/navigation.dart';
 import 'package:todo_list/core/helper/spacing.dart';
 import 'package:todo_list/core/utils/app_assets.dart';
 import 'package:todo_list/core/utils/app_colors.dart';
@@ -139,7 +141,13 @@ class HomeView extends StatelessWidget {
             verticalSpace(20),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 85.0),
-              child: MyCustomButtom(text: "Logout"),
+              child: MyCustomButtom(
+                text: "Logout",
+                onTap: () {
+                  FirebaseAuth.instance.signOut();
+                  customnavigate(context, '/login');
+                },
+              ),
             ),
             verticalSpace(15),
           ],
