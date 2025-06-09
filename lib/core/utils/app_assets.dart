@@ -14,6 +14,14 @@ class Assets {
   /// assets/images/circleImage.svg
   static const String imagesCircleImage = "assets/images/circleImage.svg";
 
+  /// Assets for imagesEyeoff
+  /// assets/images/eyeoff.svg
+  static const String imagesEyeoff = "assets/images/eyeoff.svg";
+
+  /// Assets for imagesEyeon
+  /// assets/images/eyeon.svg
+  static const String imagesEyeon = "assets/images/eyeon.svg";
+
   /// Assets for imagesForgotPasswordBro
   /// assets/images/Forgot-password-bro.svg
   static const String imagesForgotPasswordBro = "assets/images/Forgot-password-bro.svg";

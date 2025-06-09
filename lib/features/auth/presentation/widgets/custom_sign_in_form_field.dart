@@ -1,8 +1,12 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:todo_list/core/funcations/custom_toast.dart';
 import 'package:todo_list/core/funcations/navigation.dart';
+import 'package:todo_list/core/funcations/validation_methods.dart';
 import 'package:todo_list/core/helper/spacing.dart';
+import 'package:todo_list/core/utils/app_assets.dart';
 import 'package:todo_list/core/utils/app_colors.dart';
 import 'package:todo_list/core/utils/custom_text_style.dart';
 import 'package:todo_list/core/widgets/custom_bottom.dart';
@@ -27,15 +31,22 @@ class CustomSignInFormField extends StatelessWidget {
               backgroundColor: AppColors.red,
             );
           } else if (state is SignInSuccess) {
-            customToast(meg: "Welcome back!", backgroundColor: AppColors.green);
+            FirebaseAuth.instance.currentUser!.emailVerified
+                ? customReplacementNavigate(context, '/home')
+                : customToast(
+                  meg: "Please verify your email",
+                  backgroundColor: AppColors.red,
+                );
           }
         },
         builder: (context, state) {
           return Form(
+            key: authCubit.signInFromKey,
             child: Column(
               children: [
                 verticalSpace(30),
                 MyCustomTextFormField(
+                  validator: emailValidation,
                   hint: "Enter your email",
                   label: "Enter your email",
                   obscureText: false,
@@ -45,12 +56,34 @@ class CustomSignInFormField extends StatelessWidget {
                 ),
                 verticalSpace(30),
                 MyCustomTextFormField(
+                  validator: passwordValidation,
                   hint: "Enter your password",
                   label: "Enter your password",
-                  obscureText: true,
                   onChanged: (password) {
                     authCubit.password = password;
                   },
+                  suffixIcon:
+                      authCubit.obscurePasswordTextValue == true
+                          ? IconButton(
+                            onPressed: authCubit.obscurePasswordText,
+                            icon: SvgPicture.asset(
+                              Assets.imagesEyeon,
+                              height: 17,
+                              width: 17,
+                              fit: BoxFit.scaleDown,
+                            ),
+                          )
+                          : IconButton(
+                            onPressed: authCubit.obscurePasswordText,
+                            icon: SvgPicture.asset(
+                              Assets.imagesEyeoff,
+                              height: 17,
+                              width: 17,
+                              fit: BoxFit.scaleDown,
+                            ),
+                          ),
+
+                  obscureText: authCubit.obscurePasswordTextValue!,
                 ),
                 verticalSpace(10),
                 Padding(
@@ -79,8 +112,10 @@ class CustomSignInFormField extends StatelessWidget {
                       child: MyCustomButtom(
                         text: "Sign In",
                         onTap: () {
-                          authCubit.signInWithEmailAndPassword();
-                          // customnavigate(context, '/home');
+                          if (authCubit.signInFromKey.currentState!
+                              .validate()) {
+                            authCubit.signInWithEmailAndPassword();
+                          }
                         },
                       ),
                     ),

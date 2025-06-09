@@ -1,19 +1,21 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:todo_list/core/funcations/custom_toast.dart';
 import 'package:todo_list/features/auth/presentation/cubit/auth_state.dart';
 
 class AuthCubit extends Cubit<AuthState> {
   AuthCubit() : super(AuthInitial());
   String? emailAddress;
   String? password;
-  String? firstName;
-  String? lastName;
+  String? fullName;
   bool? termsAndServiceCheckBoxValue = false;
   bool? obscurePasswordTextValue = true;
   GlobalKey<FormState> signUpFromKey = GlobalKey();
   GlobalKey<FormState> signInFromKey = GlobalKey();
   GlobalKey<FormState> resetPasswordFromKey = GlobalKey();
+
   //!sign up method
   Future<void> signUpWithEmailAndPassword() async {
     try {
@@ -22,7 +24,8 @@ class AuthCubit extends Cubit<AuthState> {
         email: emailAddress!,
         password: password!,
       );
-
+      await addUserProfile();
+      await verfiyEmail();
       emit(SignUpSuccess());
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
@@ -40,7 +43,6 @@ class AuthCubit extends Cubit<AuthState> {
       emit(SignUpFauiler(errorMessage: e.toString()));
     }
   }
-
   //!sign in method
 
   Future<void> signInWithEmailAndPassword() async {
@@ -50,7 +52,7 @@ class AuthCubit extends Cubit<AuthState> {
         email: emailAddress!,
         password: password!,
       );
-
+      await addUserProfile();
       emit(SignInSuccess());
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
@@ -64,6 +66,55 @@ class AuthCubit extends Cubit<AuthState> {
       }
     } catch (e) {
       emit(SignInFauiler(errorMessage: e.toString()));
+    }
+  }
+
+  //! verfication method
+  Future<void> verfiyEmail() async {
+    await FirebaseAuth.instance.currentUser!.sendEmailVerification();
+  }
+
+  //! update T&S check box
+  updateTermsAndServiceCheckBox({required newValue}) {
+    termsAndServiceCheckBoxValue = newValue;
+    emit(CheckBoxStateUpdate());
+  }
+
+  //! obscure password method
+  void obscurePasswordText() {
+    obscurePasswordTextValue == true
+        ? obscurePasswordTextValue = false
+        : obscurePasswordTextValue = true;
+    emit(ObscureTextUpdateState());
+  }
+
+  Future<void> sendPasswordResetEmail() async {
+    try {
+      emit(PasswordResetEmailLoading());
+      await FirebaseAuth.instance.sendPasswordResetEmail(email: emailAddress!);
+      emit(PasswordResetEmailSuccess());
+    } on FirebaseAuthException catch (e) {
+      emit(PasswordResetEmailFauiler(errorMessage: 'Something went wrong: $e'));
+    }
+  }
+
+  Future<UserCredential> registerWithGoogle() async {
+    final user = await FirebaseAuth.instance.signInWithCredential(
+      AuthCredential(providerId: "providerId", signInMethod: "signInMethod"),
+    );
+    return user;
+  }
+
+  Future<void> addUserProfile() async {
+    CollectionReference users = FirebaseFirestore.instance.collection("users");
+    users.add({"full_name": fullName, "email_address": emailAddress});
+  }
+
+  Future<void> signOut() async {
+    try {
+      await FirebaseAuth.instance.signOut();
+    } on FirebaseAuthException catch (e) {
+      customToast(meg: e.toString());
     }
   }
 }

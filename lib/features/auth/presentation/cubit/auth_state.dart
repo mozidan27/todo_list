@@ -12,6 +12,10 @@ final class SignUpFauiler extends AuthState {
   SignUpFauiler({required this.errorMessage});
 }
 
+final class CheckBoxStateUpdate extends AuthState {}
+
+final class ObscureTextUpdateState extends AuthState {}
+
 final class SignInSuccess extends AuthState {}
 
 final class SignInLoading extends AuthState {}
@@ -20,4 +24,14 @@ final class SignInFauiler extends AuthState {
   final String errorMessage;
 
   SignInFauiler({required this.errorMessage});
+}
+
+final class PasswordResetEmailSuccess extends AuthState {}
+
+final class PasswordResetEmailLoading extends AuthState {}
+
+final class PasswordResetEmailFauiler extends AuthState {
+  final String errorMessage;
+
+  PasswordResetEmailFauiler({required this.errorMessage});
 }
