@@ -42,6 +42,9 @@ dependencies:
   firebase_core: ^3.13.1
   flutter_bloc: ^9.1.1
   cloud_firestore: ^5.6.8
+  awesome_dialog: ^3.2.1
+  flutter_slidable: ^4.0.0
+  hive_flutter: ^1.1.0
 
 dev_dependencies:
   flutter_test:

@@ -13,6 +13,8 @@ class MyCustomTextFormField extends StatelessWidget {
     this.validator,
     required this.obscureText,
     required this.label,
+    this.fillColor,
+    this.enabledBorderColor,
   });
   final String hint;
   final Widget? suffixIcon;
@@ -22,6 +24,8 @@ class MyCustomTextFormField extends StatelessWidget {
   final String? Function(String?)? validator;
   final bool obscureText;
   final String label;
+  final Color? fillColor;
+  final Color? enabledBorderColor;
   @override
   Widget build(BuildContext context) {
     return TextFormField(
@@ -39,7 +43,7 @@ class MyCustomTextFormField extends StatelessWidget {
           color: AppColors.darkGrey,
         ),
         labelText: label,
-        fillColor: AppColors.white,
+        fillColor: fillColor ?? AppColors.white,
         filled: true,
         suffixIcon: suffixIcon,
         contentPadding: EdgeInsets.only(left: 14),
@@ -50,14 +54,16 @@ class MyCustomTextFormField extends StatelessWidget {
         hintFadeDuration: Duration(days: 0),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(14),
-          // borderSide: BorderSide(color: AppColors.black),
+          borderSide: BorderSide(color: AppColors.black),
         ),
         focusedBorder: OutlineInputBorder(
           borderSide: BorderSide(color: AppColors.mintGreen),
           borderRadius: BorderRadius.circular(14),
         ),
         enabledBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: AppColors.backGround),
+          borderSide: BorderSide(
+            color: enabledBorderColor ?? AppColors.backGround,
+          ),
           borderRadius: BorderRadius.circular(14),
         ),
       ),

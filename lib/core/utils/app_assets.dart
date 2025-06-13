@@ -26,6 +26,10 @@ class Assets {
   /// assets/images/Forgot-password-bro.svg
   static const String imagesForgotPasswordBro = "assets/images/Forgot-password-bro.svg";
 
+  /// Assets for imagesNoTask
+  /// assets/images/no_task.png
+  static const String imagesNoTask = "assets/images/no_task.png";
+
   /// Assets for imagesOnboardingAmico
   /// assets/images/Onboarding-amico.svg
   static const String imagesOnboardingAmico = "assets/images/Onboarding-amico.svg";

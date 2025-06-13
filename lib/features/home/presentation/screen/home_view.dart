@@ -1,16 +1,53 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:todo_list/core/funcations/custom_toast.dart';
 import 'package:todo_list/core/funcations/navigation.dart';
 import 'package:todo_list/core/helper/spacing.dart';
 import 'package:todo_list/core/utils/app_assets.dart';
 import 'package:todo_list/core/utils/app_colors.dart';
 import 'package:todo_list/core/utils/custom_text_style.dart';
 import 'package:todo_list/core/widgets/custom_bottom.dart';
-import 'package:todo_list/features/home/presentation/widgets/pick_image_widget.dart';
+import 'package:todo_list/features/home/presentation/widgets/custom_awesome_dialog_box.dart';
+import 'package:todo_list/features/home/presentation/widgets/profile_image_and_welcome_text.dart';
+import 'package:todo_list/features/home/presentation/widgets/to_do_tile.dart';
 
-class HomeView extends StatelessWidget {
+class HomeView extends StatefulWidget {
   const HomeView({super.key});
+
+  @override
+  State<HomeView> createState() => _HomeViewState();
+}
+
+class _HomeViewState extends State<HomeView> {
+  void createNewTask(BuildContext context) {}
+  final _controller = TextEditingController();
+  List toDoList = [
+    ["first task", false],
+    ["do exerise", true],
+  ];
+  void checkBoxChanged(bool? value, int index) {
+    setState(() {
+      toDoList[index][1] = !toDoList[index][1];
+    });
+  }
+
+  void addNewTask() {
+    if (_controller.text.isNotEmpty) {
+      setState(() {
+        toDoList.add([_controller.text, false]);
+        _controller.clear();
+      });
+    } else {
+      customToast(meg: 'Enter some text', backgroundColor: AppColors.red);
+    }
+  }
+
+  void deleteTask(int index) {
+    setState(() {
+      toDoList.removeAt(index);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -19,35 +56,7 @@ class HomeView extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(
-              height: 267,
-              child: Stack(
-                children: [
-                  SvgPicture.asset(Assets.imagesCircleImage),
-                  Center(
-                    child: SvgPicture.asset(
-                      fit: BoxFit.fill,
-                      Assets.imagesRectangle,
-                      width: double.infinity,
-                    ),
-                  ),
-
-                  Column(
-                    children: [
-                      verticalSpace(64),
-                      Center(child: PickImageWidget()),
-                      verticalSpace(19),
-                      Center(
-                        child: Text(
-                          "Welcome Zidan!",
-                          style: CustomTextStyle.poppins20W500Black,
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
+            ProfileImageAndWelcomeText(name: 'Welcome Zidan!'),
             verticalSpace(19),
             Center(child: SvgPicture.asset(Assets.imagesTaskBro, height: 246)),
 
@@ -57,7 +66,7 @@ class HomeView extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "Todo Tasks.",
+                    "Today Tasks: ${toDoList.length}",
                     style: CustomTextStyle.poppins20W500Black.copyWith(
                       fontWeight: FontWeight.w900,
                     ),
@@ -92,12 +101,21 @@ class HomeView extends StatelessWidget {
                                     color: Color(0xff878787),
                                   ),
                             ),
-                            Container(
-                              decoration: BoxDecoration(
-                                color: Colors.black,
-                                shape: BoxShape.circle,
+                            GestureDetector(
+                              onTap: () {
+                                customAwesomeDialogBox(
+                                  context,
+                                  controller: _controller,
+                                  btnOkOnPress: addNewTask,
+                                ).show();
+                              },
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  color: Colors.black,
+                                  shape: BoxShape.circle,
+                                ),
+                                child: Icon(Icons.add, color: Colors.white),
                               ),
-                              child: Icon(Icons.add, color: Colors.white),
                             ),
                           ],
                         ),
@@ -108,28 +126,33 @@ class HomeView extends StatelessWidget {
                             thickness: 5,
                             trackVisibility: true,
                             interactive: true,
-                            child: ListView.builder(
-                              padding: EdgeInsets.zero,
-                              shrinkWrap: true,
-                              itemCount: 10,
-                              itemBuilder: (context, index) {
-                                return Row(
-                                  children: [
-                                    Checkbox(
-                                      side: BorderSide(
-                                        color: Colors.black,
-                                        width: 2.5,
+                            child:
+                                toDoList.isNotEmpty
+                                    ? ListView.builder(
+                                      padding: EdgeInsets.zero,
+                                      shrinkWrap: true,
+                                      itemCount: toDoList.length,
+                                      itemBuilder: (context, index) {
+                                        return ToDoTile(
+                                          onPressed:
+                                              (context) => deleteTask(index),
+                                          taskName: toDoList[index][0],
+                                          taskCompleted: toDoList[index][1],
+                                          onChanged:
+                                              (value) =>
+                                                  checkBoxChanged(value, index),
+                                        );
+                                      },
+                                    )
+                                    : Center(
+                                      child: Text(
+                                        "No Tasks For Today",
+                                        style: TextStyle(
+                                          color: Color(0xff878787),
+                                          fontWeight: FontWeight.w500,
+                                        ),
                                       ),
-                                      checkColor: AppColors.mintGreen,
-                                      activeColor: AppColors.mintGreen,
-                                      value: true,
-                                      onChanged: (value) {},
                                     ),
-                                    Text('first task'),
-                                  ],
-                                );
-                              },
-                            ),
                           ),
                         ),
                       ],
