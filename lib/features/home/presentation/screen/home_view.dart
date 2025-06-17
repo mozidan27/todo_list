@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:todo_list/core/funcations/custom_toast.dart';
 import 'package:todo_list/core/funcations/navigation.dart';
 import 'package:todo_list/core/helper/spacing.dart';
@@ -8,6 +9,7 @@ import 'package:todo_list/core/utils/app_assets.dart';
 import 'package:todo_list/core/utils/app_colors.dart';
 import 'package:todo_list/core/utils/custom_text_style.dart';
 import 'package:todo_list/core/widgets/custom_bottom.dart';
+import 'package:todo_list/features/home/data/database.dart';
 import 'package:todo_list/features/home/presentation/widgets/custom_awesome_dialog_box.dart';
 import 'package:todo_list/features/home/presentation/widgets/profile_image_and_welcome_text.dart';
 import 'package:todo_list/features/home/presentation/widgets/to_do_tile.dart';
@@ -20,24 +22,35 @@ class HomeView extends StatefulWidget {
 }
 
 class _HomeViewState extends State<HomeView> {
-  void createNewTask(BuildContext context) {}
+  final _myBox = Hive.box('mybox');
+  ToDoDataBase db = ToDoDataBase();
+
+  @override
+  void initState() {
+    if (_myBox.get("TODOLIST") == null) {
+      db.createInitialData();
+    } else {
+      db.loadData();
+    }
+    super.initState();
+  }
+
   final _controller = TextEditingController();
-  List toDoList = [
-    ["first task", false],
-    ["do exerise", true],
-  ];
+
   void checkBoxChanged(bool? value, int index) {
     setState(() {
-      toDoList[index][1] = !toDoList[index][1];
+      db.toDoList[index][1] = !db.toDoList[index][1];
     });
+    db.updateDataBase();
   }
 
   void addNewTask() {
     if (_controller.text.isNotEmpty) {
       setState(() {
-        toDoList.add([_controller.text, false]);
+        db.toDoList.add([_controller.text, false]);
         _controller.clear();
       });
+      db.updateDataBase();
     } else {
       customToast(meg: 'Enter some text', backgroundColor: AppColors.red);
     }
@@ -45,8 +58,9 @@ class _HomeViewState extends State<HomeView> {
 
   void deleteTask(int index) {
     setState(() {
-      toDoList.removeAt(index);
+      db.toDoList.removeAt(index);
     });
+    db.updateDataBase();
   }
 
   @override
@@ -66,7 +80,7 @@ class _HomeViewState extends State<HomeView> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "Today Tasks: ${toDoList.length}",
+                    "Today Tasks: ${db.toDoList.length}",
                     style: CustomTextStyle.poppins20W500Black.copyWith(
                       fontWeight: FontWeight.w900,
                     ),
@@ -127,17 +141,17 @@ class _HomeViewState extends State<HomeView> {
                             trackVisibility: true,
                             interactive: true,
                             child:
-                                toDoList.isNotEmpty
+                                db.toDoList.isNotEmpty
                                     ? ListView.builder(
                                       padding: EdgeInsets.zero,
                                       shrinkWrap: true,
-                                      itemCount: toDoList.length,
+                                      itemCount: db.toDoList.length,
                                       itemBuilder: (context, index) {
                                         return ToDoTile(
                                           onPressed:
                                               (context) => deleteTask(index),
-                                          taskName: toDoList[index][0],
-                                          taskCompleted: toDoList[index][1],
+                                          taskName: db.toDoList[index][0],
+                                          taskCompleted: db.toDoList[index][1],
                                           onChanged:
                                               (value) =>
                                                   checkBoxChanged(value, index),

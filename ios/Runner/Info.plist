@@ -8,6 +8,12 @@
 	<string>Todo List</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
+	<key>NSCameraUsageDescription</key>
+	<string>This app requires access to your camera to take photos.</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>This app requires access to your microphone for capturing audio.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>This app requires access to your photo library to select images.</string>
 	<key>CFBundleIdentifier</key>
 	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
 	<key>CFBundleInfoDictionaryVersion</key>

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:todo_list/core/helper/spacing.dart';
 import 'package:todo_list/core/utils/app_assets.dart';
 import 'package:todo_list/core/utils/custom_text_style.dart';
+import 'package:todo_list/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:todo_list/features/home/presentation/widgets/pick_image_widget.dart';
 
 class ProfileImageAndWelcomeText extends StatelessWidget {
@@ -26,7 +28,12 @@ class ProfileImageAndWelcomeText extends StatelessWidget {
           Column(
             children: [
               verticalSpace(64),
-              Center(child: PickImageWidget()),
+              Center(
+                child: BlocProvider(
+                  create: (context) => AuthCubit(),
+                  child: PickImageWidget(),
+                ),
+              ),
               verticalSpace(19),
               Center(
                 child: Text(name, style: CustomTextStyle.poppins20W500Black),
