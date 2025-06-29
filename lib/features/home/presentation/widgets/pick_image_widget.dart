@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:todo_list/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:todo_list/features/auth/presentation/cubit/auth_state.dart';
@@ -42,11 +43,11 @@ class PickImageWidget extends StatelessWidget {
                                 borderRadius: BorderRadius.circular(25),
                               ),
                               child: GestureDetector(
-                                onTap: () {
-                                  if (pickimage(context) == null) {
+                                onTap: () async {
+                                  if (await pickimage(context) == null) {
                                     return;
                                   } else {
-                                    pickimage(context);
+                                    pickimage;
                                   }
                                 },
                                 child: const Icon(
@@ -62,11 +63,11 @@ class PickImageWidget extends StatelessWidget {
                     ),
                   )
                   : GestureDetector(
-                    onTap: () {
-                      if (pickimage(context) == null) {
+                    onTap: () async {
+                      if (await pickimage(context) == null) {
                         return;
                       } else {
-                        pickimage(context);
+                        pickimage;
                       }
                     },
                     child: CircleAvatar(
@@ -80,9 +81,63 @@ class PickImageWidget extends StatelessWidget {
     );
   }
 
-  pickimage(BuildContext context) {
-    ImagePicker()
-        .pickImage(source: ImageSource.gallery)
-        .then((value) => context.read<AuthCubit>().uploadProfilePic(value));
+  // pickimage(BuildContext context) async {
+  //   final image = await ImagePicker()
+  //       .pickImage(source: ImageSource.gallery, imageQuality: 100)
+  //       .then((value) => context.read<AuthCubit>().uploadProfilePic(value));
+  //   if (image != null) {
+  //     final croppedImage = await cropImages(image);
+  //     Navigator.of(context).push(
+  //       MaterialPageRoute(
+  //         builder: (context) => ImageCropperView(image: croppedImage),
+  //       ),
+  //     );
+  //   }
+  // }
+  pickimage(BuildContext context) async {
+    final image = await ImagePicker().pickImage(
+      source: ImageSource.gallery,
+      imageQuality: 100,
+    );
+
+    if (image != null) {
+      final croppedImage = await cropImages(image);
+      context.read<AuthCubit>().uploadProfilePic(XFile(croppedImage.path));
+      // Navigator.of(context).push(
+      //   MaterialPageRoute(
+      //     builder: (context) => ImageCropperView(image: croppedImage),
+      //   ),
+      // );
+    }
+  }
+
+  Future<CroppedFile> cropImages(XFile image) async {
+    final croppedFile = await ImageCropper().cropImage(
+      sourcePath: image.path,
+      uiSettings: [
+        AndroidUiSettings(
+          toolbarTitle: 'Cropper',
+          toolbarColor: Colors.deepOrange,
+          toolbarWidgetColor: Colors.white,
+          initAspectRatio: CropAspectRatioPreset.original,
+          lockAspectRatio: false,
+          aspectRatioPresets: [
+            CropAspectRatioPreset.original,
+            CropAspectRatioPreset.square,
+            CropAspectRatioPreset.ratio4x3,
+            CropAspectRatioPreset.ratio7x5,
+            CropAspectRatioPreset.ratio16x9,
+          ],
+        ),
+        IOSUiSettings(
+          title: 'Cropper',
+          aspectRatioPresets: [
+            CropAspectRatioPreset.original,
+            CropAspectRatioPreset.square,
+          ],
+        ),
+      ],
+    );
+    return croppedFile!;
   }
 }
