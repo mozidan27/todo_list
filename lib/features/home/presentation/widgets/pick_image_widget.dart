@@ -5,9 +5,25 @@ import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:todo_list/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:todo_list/features/auth/presentation/cubit/auth_state.dart';
+import 'package:todo_list/features/home/data/my_pic_data_base.dart';
 
-class PickImageWidget extends StatelessWidget {
+class PickImageWidget extends StatefulWidget {
   const PickImageWidget({super.key});
+
+  @override
+  State<PickImageWidget> createState() => _PickImageWidgetState();
+}
+
+class _PickImageWidgetState extends State<PickImageWidget> {
+  MyPicDataBase db = MyPicDataBase();
+  @override
+  void initState() {
+    super.initState();
+    db.loadImage();
+    if (db.pic.isNotEmpty && File(db.pic).existsSync()) {
+      context.read<AuthCubit>().uploadProfilePic(XFile(db.pic));
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -48,6 +64,8 @@ class PickImageWidget extends StatelessWidget {
                                     return;
                                   } else {
                                     pickimage;
+                                    db.loadImage();
+                                    db.updateImage();
                                   }
                                 },
                                 child: const Icon(
@@ -68,6 +86,8 @@ class PickImageWidget extends StatelessWidget {
                         return;
                       } else {
                         pickimage;
+                        db.loadImage();
+                        db.updateImage();
                       }
                     },
                     child: CircleAvatar(
@@ -82,18 +102,6 @@ class PickImageWidget extends StatelessWidget {
   }
 
   // pickimage(BuildContext context) async {
-  //   final image = await ImagePicker()
-  //       .pickImage(source: ImageSource.gallery, imageQuality: 100)
-  //       .then((value) => context.read<AuthCubit>().uploadProfilePic(value));
-  //   if (image != null) {
-  //     final croppedImage = await cropImages(image);
-  //     Navigator.of(context).push(
-  //       MaterialPageRoute(
-  //         builder: (context) => ImageCropperView(image: croppedImage),
-  //       ),
-  //     );
-  //   }
-  // }
   pickimage(BuildContext context) async {
     final image = await ImagePicker().pickImage(
       source: ImageSource.gallery,
@@ -103,6 +111,8 @@ class PickImageWidget extends StatelessWidget {
     if (image != null) {
       final croppedImage = await cropImages(image);
       context.read<AuthCubit>().uploadProfilePic(XFile(croppedImage.path));
+      db.saveImagePath(croppedImage.path);
+      db.updateImage();
       // Navigator.of(context).push(
       //   MaterialPageRoute(
       //     builder: (context) => ImageCropperView(image: croppedImage),

@@ -1,22 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:hive_flutter/hive_flutter.dart';
+import 'package:todo_list/core/database/cache/cache_helper.dart';
 import 'package:todo_list/core/funcations/navigation.dart';
 import 'package:todo_list/core/helper/spacing.dart';
+import 'package:todo_list/core/services/service_locator.dart';
 import 'package:todo_list/core/utils/app_assets.dart';
 import 'package:todo_list/core/utils/custom_text_style.dart';
 import 'package:todo_list/core/widgets/custom_bottom.dart';
-import 'package:todo_list/features/auth/presentation/cubit/auth_cubit.dart';
-import 'package:todo_list/features/home/data/database.dart';
 
 class OnBoardingView extends StatelessWidget {
   const OnBoardingView({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final myBox = Hive.box('mybox');
-    ToDoDataBase db = ToDoDataBase();
     return Scaffold(
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -50,7 +46,10 @@ class OnBoardingView extends StatelessWidget {
             child: MyCustomButtom(
               text: "Get Started",
               onTap: () {
-                context.read<AuthCubit>().setOnboardingVisited(true);
+                getIt<CacheHelper>().saveData(
+                  key: "isOnboardingVisited",
+                  value: true,
+                );
                 customnavigate(context, "/signup");
               },
             ),

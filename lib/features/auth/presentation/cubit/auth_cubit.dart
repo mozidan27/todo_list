@@ -8,14 +8,7 @@ import 'package:todo_list/core/funcations/custom_toast.dart';
 import 'package:todo_list/features/auth/presentation/cubit/auth_state.dart';
 
 class AuthCubit extends Cubit<AuthState> {
-  AuthCubit() : super(AuthInitial()) {
-    settingsBox = Hive.box('mybox');
-    bool isVisited = settingsBox.get(
-      'isOnboardingVisited',
-      defaultValue: false,
-    );
-    emit(IsVisited());
-  }
+  AuthCubit() : super(AuthInitial());
   XFile? profilePic;
   late Box settingsBox;
   String? emailAddress;
@@ -26,11 +19,6 @@ class AuthCubit extends Cubit<AuthState> {
   GlobalKey<FormState> signUpFromKey = GlobalKey();
   GlobalKey<FormState> signInFromKey = GlobalKey();
   GlobalKey<FormState> resetPasswordFromKey = GlobalKey();
-
-  void setOnboardingVisited(bool value) {
-    settingsBox.put('isOnboardingVisited', value);
-    emit(IsVisited());
-  }
 
   //!sign up method
   Future<void> signUpWithEmailAndPassword() async {

@@ -24,6 +24,7 @@ class HomeView extends StatefulWidget {
 class _HomeViewState extends State<HomeView> {
   final _myBox = Hive.box('mybox');
   ToDoDataBase db = ToDoDataBase();
+  String userName = '';
 
   @override
   void initState() {
@@ -59,6 +60,7 @@ class _HomeViewState extends State<HomeView> {
   void deleteTask(int index) {
     setState(() {
       db.toDoList.removeAt(index);
+      customToast(meg: "Task Deleted Successfully");
     });
     db.updateDataBase();
   }
@@ -70,7 +72,7 @@ class _HomeViewState extends State<HomeView> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            ProfileImageAndWelcomeText(name: 'Welcome Zidan!'),
+            ProfileImageAndWelcomeText(name: 'Welcome Back!'),
             verticalSpace(19),
             Center(child: SvgPicture.asset(Assets.imagesTaskBro, height: 246)),
 

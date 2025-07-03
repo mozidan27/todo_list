@@ -36,6 +36,4 @@ final class PasswordResetEmailFauiler extends AuthState {
   PasswordResetEmailFauiler({required this.errorMessage});
 }
 
-final class IsVisited extends AuthState {}
-
 final class UploadProfilePic extends AuthState {}
