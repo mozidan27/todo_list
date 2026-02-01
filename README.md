@@ -1,6 +1,30 @@
-# TODo App
+# TODo App Flutter, Hive & Firebase
 
-This project is to implement authentication using Firebase and local storage.
+A feature-rich To-Do application built with Flutter, focusing on clean code, scalability, and real-world architecture. The app integrates Firebase Authentication to support secure login, signup, and password recovery, along with Firebase Cloud services for seamless backend integration.
+
+State management is handled using Cubit, and the project follows the Clean Architecture pattern to ensure a well-structured, maintainable, and reusable codebase.
+
+For local data persistence, Hive is used alongside SharedPreferences to manage onboarding flow, caching, and lightweight storage. Dependency Injection is implemented to improve testability and separation of concerns.
+
+The app also includes profile customization features using Image Picker and Image Cropper, allowing users to select and crop their profile images smoothly.
+
+Key Highlights:
+
+Firebase Authentication (Login / Signup / Forgot Password)
+
+Firebase Cloud integration
+
+Cubit state management
+
+Clean Architecture implementation
+
+Local storage with Hive & SharedPreferences
+
+Dependency Injection
+
+Profile image selection & cropping
+
+Scalable, maintainable, and reusable codebase
 
 ## 🖌️ : Getting Started
 
